@@ -1,6 +1,7 @@
 package com.geektech.taskappexample
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -28,10 +29,19 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,
                 R.id.navigation_profile,
-                R.id.newTaskFragment
+                R.id.newTaskFragment,
+                R.id.onBoardFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        navController.navigate(
+            R.id.onBoardFragment
+        )
+        navController.addOnDestinationChangedListener{_,dest,_ ->
+            navView.visibility=
+                if(dest.id==R.id.newTaskFragment||dest.id==R.id.onBoardFragment) View.GONE else View.VISIBLE
+        }
     }
 }
