@@ -32,7 +32,6 @@ class OnBoardAdapter(
 
 data class BoardModel(
     val bgColor: Int,
-    val imageDot: Int,
     val imageRes: Int,
     val title: String,
     val description: String

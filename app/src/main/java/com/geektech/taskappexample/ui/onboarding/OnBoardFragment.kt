@@ -19,21 +19,18 @@ class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
     private var boardModels = listOf(
         BoardModel(
             bgColor = R.color.bg_color1,
-            imageDot = R.drawable.ic_dots1,
             imageRes = R.drawable.ic_onboarding1,
             title = "To-do list!",
             description = "Here you can write down\nsomething important or make a \nschedule for tomorrow :)"
         ),
         BoardModel(
             bgColor = R.color.bg_color2,
-            imageDot = R.drawable.ic_dots2,
             imageRes = R.drawable.ic_onboarding2,
             title = "Share your crazy\nidea ^_^",
             description = "You can easily share with your \nreport, list or schedule and it's \nconvenient"
         ),
         BoardModel(
             bgColor = R.color.bg_color3,
-            imageDot = R.drawable.ic_dots3,
             imageRes = R.drawable.ic_onboarding3,
             title = "Flexibility",
             description = "Your note with you at home, at work, even at the resort"
