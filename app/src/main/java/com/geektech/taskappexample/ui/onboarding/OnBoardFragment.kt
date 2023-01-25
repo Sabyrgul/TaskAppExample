@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.geektech.taskappexample.R
 import com.geektech.taskappexample.databinding.FragmentOnBoardBinding
 import com.geektech.taskappexample.databinding.FragmentOnBoardPageBinding
@@ -14,7 +15,6 @@ import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
 class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
 
     private var binding: FragmentOnBoardBinding? = null
-    private var binding2: FragmentOnBoardPageBinding? = null
     private var boardAdapter: OnBoardAdapter? = null
     private var boardModels = listOf(
         BoardModel(
@@ -37,12 +37,14 @@ class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
         )
     )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentOnBoardBinding.inflate(LayoutInflater.from(context), container, false)
-        binding2 = FragmentOnBoardPageBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -55,10 +57,8 @@ class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
         boardAdapter = OnBoardAdapter(
             childFragmentManager, lifecycle, boardModels
         )
+
         binding?.viewpager?.adapter = boardAdapter
-        binding2?.springDotsIndicator?.attachTo(binding?.viewpager!!)
-
-
     }
 
     override fun onSkipClicked() {
@@ -72,5 +72,9 @@ class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
 
     override fun onStartClicked() {
         findNavController().navigate(R.id.navigation_home)
+    }
+
+    override fun getViewPager(): ViewPager2 {
+        return binding?.viewpager!!
     }
 }

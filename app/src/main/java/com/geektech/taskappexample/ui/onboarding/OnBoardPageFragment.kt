@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager2.widget.ViewPager2
 import com.geektech.taskappexample.R
 import com.geektech.taskappexample.databinding.FragmentOnBoardPageBinding
 
@@ -32,6 +33,7 @@ class OnBoardPageFragment : Fragment() {
     }
 
     private fun initViews() {
+        binding?.springDotsIndicator?.attachTo((parentFragment as OnBoardListeners).getViewPager())
         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getSerializable(BoardModel.ARG_KEY, BoardModel::class.java)
         } else {
@@ -73,5 +75,6 @@ class OnBoardPageFragment : Fragment() {
         fun onSkipClicked()
         fun onNextClicked()
         fun onStartClicked()
+        fun getViewPager(): ViewPager2
     }
 }
