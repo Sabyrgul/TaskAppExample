@@ -13,14 +13,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.geektech.taskappexample.databinding.FragmentProfileBinding
+import com.geektech.taskappexample.utils.Preferences
+
 class ProfileFragment : Fragment() {
+
     private var _binding: FragmentProfileBinding? = null
-    lateinit var profileUri:Uri
+    var profileImageUri: Uri? = null
+
+    private val profilePicker = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        binding.profileImage.setImageURI(uri)
+        profileImageUri = uri
+
+    }
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -29,26 +40,29 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val profilePick = registerForActivityResult<Intent, ActivityResult>(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result: ActivityResult ->
-            profileUri = result.data!!.data!!
-            Glide.with(this).load(profileUri).transform(
-                CenterCrop(), RoundedCorners(200)
-            ).into(binding.profileImage)
-            //binding.profileImage.setImageURI(profileUri)
-        }
-
+        // initViews()
         binding.profileImage.setOnClickListener {
-            val intent = Intent()
-            intent.action = Intent.ACTION_PICK
-            intent.type = "image/*"
-            profilePick.launch(intent)
+            profilePicker.launch("image/*")
         }
     }
+
+    private fun initViews() {
+
+        val preferences = Preferences(requireContext())
+        if (preferences.getNameInserted() != "1") binding.profileEditText.setText(preferences.getNameInserted())
+
+        if (preferences.getPictureInserted() != "1") binding.profileImage.setImageURI(
+            Uri.parse(
+                preferences.getPictureInserted()
+            )
+        )
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        val preferences = Preferences(requireContext())
+        if (binding.profileEditText.text.toString() != "") preferences.setNameInserted(binding.profileEditText.text.toString())
+        if (profileImageUri != null) preferences.setPictureInserted(profileImageUri.toString())
         _binding = null
     }
 }

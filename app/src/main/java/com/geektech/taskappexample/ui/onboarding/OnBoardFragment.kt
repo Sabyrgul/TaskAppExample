@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.geektech.taskappexample.R
 import com.geektech.taskappexample.databinding.FragmentOnBoardBinding
 import com.geektech.taskappexample.databinding.FragmentOnBoardPageBinding
+import com.geektech.taskappexample.utils.Preferences
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
 
 class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
@@ -37,9 +38,6 @@ class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
         )
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,6 +70,10 @@ class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
 
     override fun onStartClicked() {
         findNavController().navigate(R.id.navigation_home)
+
+        Preferences(requireContext()).apply {
+            setHaveSeenOnBoarding()
+        }
     }
 
     override fun getViewPager(): ViewPager2 {

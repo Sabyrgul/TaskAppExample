@@ -1,6 +1,8 @@
 package com.geektech.taskappexample.ui.home.new_task
 
+import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.geektech.taskappexample.databinding.ItemTaskBinding
@@ -8,8 +10,8 @@ import com.geektech.taskappexample.databinding.ItemTaskBinding
 class TaskAdapter(private var tasks: MutableList<TaskModel>) :
     RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
-    fun add(task: TaskModel){
-        tasks.add(0,task)
+    fun add(task: TaskModel) {
+        tasks.add(0, task)
         notifyItemChanged(0)
     }
 
@@ -31,8 +33,15 @@ class TaskAdapter(private var tasks: MutableList<TaskModel>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: TaskModel) {
+
             binding.tvTitle.text = task.title
             binding.tvDesc.text = task.description
+            binding.tvDate.text=task.date
+
+            if (task.imageUri != null) {
+                binding.ivPicture.setImageURI(Uri.parse(task.imageUri))
+                binding.ivPicture.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -41,5 +50,7 @@ class TaskAdapter(private var tasks: MutableList<TaskModel>) :
 
 data class TaskModel(
     val title: String,
-    val description: String
+    val description: String,
+    val imageUri: String? = null,
+    val date:String
 )

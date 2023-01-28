@@ -19,7 +19,8 @@ import com.geektech.taskappexample.ui.home.new_task.TaskModel
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private var taskAdapter=TaskAdapter(mutableListOf())
+    private var taskAdapter = TaskAdapter(mutableListOf())
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -41,10 +42,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViews() {
-    binding.rvTasks.apply {
-        layoutManager=LinearLayoutManager(context)
-        adapter=taskAdapter
-    }
+        binding.rvTasks.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = taskAdapter
+        }
     }
 
     private fun initListeners() {
@@ -54,9 +55,10 @@ class HomeFragment : Fragment() {
         ) { _, data ->
             val title = data.getString(NewTaskFragment.NEW_TASK_TITLE_KEY)
             val description = data.getString(NewTaskFragment.NEW_TASK_DESCRIPTION_KEY)
-
-            if(title!=null){
-                val taskmodel=TaskModel(title,description?: "")
+            val imageUri = data.getString(NewTaskFragment.NEW_TASK_IMAGE_URI_KEY)
+            val date=data.getString(NewTaskFragment.NEW_TASK_DATE_KEY)
+            if (title != null) {
+                val taskmodel = TaskModel(title, description ?: "", imageUri,date?:"")
                 taskAdapter.add(taskmodel)
             }
         }
