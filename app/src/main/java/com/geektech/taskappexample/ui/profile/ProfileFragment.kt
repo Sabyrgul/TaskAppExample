@@ -26,6 +26,7 @@ class ProfileFragment : Fragment() {
         binding.profileImage.setImageURI(uri)
         profileImageUri = uri
 
+
     }
 
     private val binding get() = _binding!!
@@ -40,29 +41,38 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // initViews()
-        binding.profileImage.setOnClickListener {
+            initViews()
+        initListeners()
+
+    }
+
+    private fun initListeners() {
+        binding?.profileImage?.setOnClickListener {
             profilePicker.launch("image/*")
+        }
+        binding?.btnSave?.setOnClickListener {
+            val name=binding?.profileEditText?.text.toString()
+            Preferences(requireContext()).setNameInserted(name)
+          Preferences(requireContext()).setPictureInserted(profileImageUri!!)
         }
     }
 
     private fun initViews() {
 
-        val preferences = Preferences(requireContext())
-        if (preferences.getNameInserted() != "1") binding.profileEditText.setText(preferences.getNameInserted())
 
-        if (preferences.getPictureInserted() != "1") binding.profileImage.setImageURI(
-            Uri.parse(
-                preferences.getPictureInserted()
-            )
-        )
+        Preferences(requireContext()).getPictureInserted()?.let {
+           Glide.with(requireContext()).load(it)
+               .circleCrop()
+               .into(binding?.profileImage!!)
+        }
+
+        Preferences(requireContext()).getNameInserted()?.let {
+            binding?.profileEditText?.setText(it)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        val preferences = Preferences(requireContext())
-        if (binding.profileEditText.text.toString() != "") preferences.setNameInserted(binding.profileEditText.text.toString())
-        if (profileImageUri != null) preferences.setPictureInserted(profileImageUri.toString())
-        _binding = null
-    }
+    _binding = null
+  }
 }

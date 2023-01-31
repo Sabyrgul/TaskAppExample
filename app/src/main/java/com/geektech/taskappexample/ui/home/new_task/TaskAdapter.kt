@@ -48,9 +48,3 @@ class TaskAdapter(private var tasks: MutableList<TaskModel>) :
 
 }
 
-data class TaskModel(
-    val title: String,
-    val description: String,
-    val imageUri: String? = null,
-    val date:String
-)
