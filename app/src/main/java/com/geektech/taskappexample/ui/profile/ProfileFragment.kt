@@ -50,11 +50,6 @@ class ProfileFragment : Fragment() {
         binding?.profileImage?.setOnClickListener {
             profilePicker.launch("image/*")
         }
-        binding?.btnSave?.setOnClickListener {
-            val name=binding?.profileEditText?.text.toString()
-            Preferences(requireContext()).setNameInserted(name)
-          Preferences(requireContext()).setPictureInserted(profileImageUri!!)
-        }
     }
 
     private fun initViews() {
@@ -73,6 +68,9 @@ class ProfileFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        val name=binding?.profileEditText?.text.toString()
+        Preferences(requireContext()).setNameInserted(name)
+        Preferences(requireContext()).setPictureInserted(profileImageUri!!)
     _binding = null
   }
 }
