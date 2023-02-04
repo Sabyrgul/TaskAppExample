@@ -7,32 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
-import com.geektech.taskappexample.R
+import com.geektech.taskappexample.MainApplication
 import com.geektech.taskappexample.databinding.FragmentNewTaskBinding
+import com.geektech.taskappexample.ui.home.HomeFragment
 import java.util.Calendar
 
 class NewTaskFragment : Fragment() {
 
     private var binding: FragmentNewTaskBinding? = null
     var date: String? = null
+    private var imageUri: Uri? = null
+
     private val imagePicker = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
         binding?.ivPicture?.setImageURI(uri)
         imageUri = uri
-    }
-
-    private var imageUri: Uri? = null
-
-    companion object {
-        const val NEW_TASK_RESULT_KEY = "new_task_result"
-        const val NEW_TASK_TITLE_KEY = "new_task_title"
-        const val NEW_TASK_IMAGE_URI_KEY = "new_task_image"
-        const val NEW_TASK_DESCRIPTION_KEY = "new_task_desc"
-        const val NEW_TASK_DATE_KEY = "new_task_date"
     }
 
     override fun onCreateView(
@@ -53,26 +44,25 @@ class NewTaskFragment : Fragment() {
         val year = cal.get(Calendar.YEAR)
 
         date = "$day.$month.$year"
-        binding?.ivPicture?.setOnClickListener {
-            imagePicker.launch("image/*")
-        }
     }
 
     private fun initListeners() {
         binding?.btnSave?.setOnClickListener {
-            val bundle = bundleOf(
-                NEW_TASK_TITLE_KEY to binding?.etTitle?.text.toString(),
-                NEW_TASK_DESCRIPTION_KEY to binding?.etDescription?.text.toString(),
-                NEW_TASK_DATE_KEY to date
+
+            val entity=TaskEntity(
+                title = binding?.etTitle?.text.toString(),
+                description = binding?.etDescription?.text?.toString(),
+                pictureUri = imageUri?.toString(),
+                date = this.date
             )
-            if (imageUri != null) {
-                bundle.putString(NEW_TASK_IMAGE_URI_KEY, imageUri.toString())
-            }
-            setFragmentResult(
-                NEW_TASK_RESULT_KEY,
-                bundle
-            )
+
+            MainApplication.appDataBase?.taskDao?.insert(entity)
+
             findNavController().navigateUp()
+        }
+
+        binding?.ivPicture?.setOnClickListener {
+            imagePicker.launch("image/*")
         }
 
     }

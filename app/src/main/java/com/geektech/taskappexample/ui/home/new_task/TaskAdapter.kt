@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.geektech.taskappexample.databinding.ItemTaskBinding
 
-class TaskAdapter(private var tasks: MutableList<TaskModel>) :
+class TaskAdapter(private var  tasks: MutableList<TaskModel> = ArrayList()) :
     RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
-    fun add(task: TaskModel) {
-        tasks.add(0, task)
-        notifyItemChanged(0)
+    var onDelete:((Int) -> Unit)?=null
+
+
+    fun renew(newList: List<TaskModel>) {
+        tasks=newList.toMutableList()
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,6 +32,8 @@ class TaskAdapter(private var tasks: MutableList<TaskModel>) :
 
     override fun getItemCount() = tasks.size
 
+
+
     inner class ViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -38,13 +43,17 @@ class TaskAdapter(private var tasks: MutableList<TaskModel>) :
             binding.tvDesc.text = task.description
             binding.tvDate.text=task.date
 
+            binding.root.setOnLongClickListener {
+             onDelete?.invoke(task.id)
+                true
+            }
+
             if (task.imageUri != null) {
                 binding.ivPicture.setImageURI(Uri.parse(task.imageUri))
                 binding.ivPicture.visibility = View.VISIBLE
             }
         }
     }
-
 
 }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/sort_by_date"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="Sort by date"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/sort_by_alphabet"
+        android:icon="@drawable/ic_account"
+        android:title="Sort by alphabet"
+        app:showAsAction="never"/>
+
+</menu>

@@ -67,10 +67,10 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         val name=binding?.profileEditText?.text.toString()
         Preferences(requireContext()).setNameInserted(name)
         Preferences(requireContext()).setPictureInserted(profileImageUri!!)
+        super.onDestroyView()
     _binding = null
   }
 }
