@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.geektech.taskappexample.databinding.ItemTaskBinding
 
-class TaskAdapter(private var  tasks: MutableList<TaskModel> = ArrayList()) :
+class TaskAdapter(private var tasks: MutableList<TaskModel> = ArrayList()) :
     RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
-    var onDelete:((Int) -> Unit)?=null
+    var onDelete: ((Int) -> Unit)? = null
 
 
     fun renew(newList: List<TaskModel>) {
-        tasks=newList.toMutableList()
+        tasks = newList.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -33,7 +33,6 @@ class TaskAdapter(private var  tasks: MutableList<TaskModel> = ArrayList()) :
     override fun getItemCount() = tasks.size
 
 
-
     inner class ViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -41,10 +40,10 @@ class TaskAdapter(private var  tasks: MutableList<TaskModel> = ArrayList()) :
 
             binding.tvTitle.text = task.title
             binding.tvDesc.text = task.description
-            binding.tvDate.text=task.date
+            binding.tvDate.text = task.date
 
             binding.root.setOnLongClickListener {
-             onDelete?.invoke(task.id)
+                onDelete?.invoke(task.id)
                 true
             }
 

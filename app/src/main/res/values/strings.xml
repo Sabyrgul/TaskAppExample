@@ -9,4 +9,15 @@
     <string name="profile">Profile</string>
     <string name="here_you_can_write_down_n_something_important_or_make_a_schedule_for_tomorrow">Here you can write down\n something important or make a schedule for tomorrow:)</string>
     <string name="to_do_list">To-do list!</string>
+    <string name="title">Title</string>
+    <string name="save">save</string>
+    <string name="skip">SKIP</string>
+    <string name="next">NEXT</string>
+    <string name="start">START</string>
+    <string name="name">Name</string>
+    <string name="new_task">New Task</string>
+    <string name="onboard">Onboard</string>
+    <string name="authentication">Authentication</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
 </resources>

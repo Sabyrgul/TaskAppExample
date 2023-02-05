@@ -25,16 +25,21 @@
     <fragment
         android:id="@+id/newTaskFragment"
         android:name="com.geektech.taskappexample.ui.home.new_task.NewTaskFragment"
-        android:label="New Task"
+        android:label="@string/new_task"
         tools:layout="@layout/fragment_new_task" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.geektech.taskappexample.ui.profile.ProfileFragment"
-        android:label="Profile"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/onBoardFragment"
         android:name="com.geektech.taskappexample.ui.onboarding.OnBoardFragment"
-        android:label="Onboard"
+        android:label="@string/onboard"
         tools:layout="@layout/fragment_on_board" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.geektech.taskappexample.ui.auth.AuthFragment"
+        android:label="@string/authentication"
+        tools:layout="@layout/fragment_auth" />
 </navigation>

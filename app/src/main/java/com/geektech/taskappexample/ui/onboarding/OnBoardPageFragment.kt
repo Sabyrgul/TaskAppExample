@@ -12,10 +12,10 @@ import com.geektech.taskappexample.databinding.FragmentOnBoardPageBinding
 
 class OnBoardPageFragment : Fragment() {
     companion object {
-        const val IS_LAST_ARG = "is_last"
+        const val IS_LAST_ARG = "is _last"
     }
 
- var binding: FragmentOnBoardPageBinding? = null
+    var binding: FragmentOnBoardPageBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,21 +57,23 @@ class OnBoardPageFragment : Fragment() {
 
         }
     }
-    fun initListeners(){
-   binding?.apply {
-       tvSkip.setOnClickListener {
-           (parentFragment as OnBoardListeners).onSkipClicked()
-       }
-       btnNext.setOnClickListener {
-           (parentFragment as OnBoardListeners).onNextClicked()
-       }
-       btnStart.setOnClickListener {
-           (parentFragment as OnBoardListeners).onStartClicked()
-       }
-   }
+
+    fun initListeners() {
+        binding?.apply {
+            tvSkip.setOnClickListener {
+                (parentFragment as OnBoardListeners).onSkipClicked()
+            }
+            btnNext.setOnClickListener {
+                (parentFragment as OnBoardListeners).onNextClicked()
+            }
+            btnStart.setOnClickListener {
+                (parentFragment as OnBoardListeners).onStartClicked()
+            }
+        }
 
     }
-    interface OnBoardListeners{
+
+    interface OnBoardListeners {
         fun onSkipClicked()
         fun onNextClicked()
         fun onStartClicked()

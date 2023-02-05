@@ -2,16 +2,15 @@ package com.geektech.taskappexample.ui.home.new_task
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.geektech.taskappexample.MainApplication
 import com.geektech.taskappexample.databinding.FragmentNewTaskBinding
-import com.geektech.taskappexample.ui.home.HomeFragment
-import java.util.Calendar
+import java.util.*
 
 class NewTaskFragment : Fragment() {
 
@@ -49,7 +48,7 @@ class NewTaskFragment : Fragment() {
     private fun initListeners() {
         binding?.btnSave?.setOnClickListener {
 
-            val entity=TaskEntity(
+            val entity = TaskEntity(
                 title = binding?.etTitle?.text.toString(),
                 description = binding?.etDescription?.text?.toString(),
                 pictureUri = imageUri?.toString(),

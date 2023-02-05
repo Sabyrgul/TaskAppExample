@@ -93,6 +93,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+
     private fun initViews() {
 
         binding.rvTasks.apply {
@@ -115,29 +116,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+
     private fun showItems() {
 
         lifecycleScope.launch {
             val tasks = MainApplication?.appDataBase?.taskDao?.getAll()
-            val taskModels = tasks?.map {
-                TaskModel(
-                    id = it.id.toInt(),
-                    title = it.title,
-                    description = it.description,
-                    imageUri = it.pictureUri,
-                    date = it.date
-                )
-            }
-            taskModels?.let {
-                taskAdapter.renew(it)
-            }
-
+            sortedItems(tasks)
         }
 
     }
 
-    private fun initListeners() {
 
+    private fun initListeners() {
 
         binding.btnFab.setOnClickListener {
             findNavController().navigate(R.id.newTaskFragment)
