@@ -12,4 +12,5 @@
     <color name="bg_color2">#DCBCB4</color>
     <color name="bg_color3">#B5F9CF</color>
     <color name="toolbar_color">#F6E8F8</color>
+    <color name="sign_out_color">#EED7F1</color>
 </resources>

@@ -2,17 +2,21 @@ package com.geektech.taskappexample
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.geektech.taskappexample.ui.home.new_task.TaskDao
-import com.geektech.taskappexample.ui.home.new_task.TaskEntity
+import com.geektech.taskappexample.data.SessionDao
+import com.geektech.taskappexample.data.SessionEntity
+import com.geektech.taskappexample.data.TaskDao
+import com.geektech.taskappexample.data.TaskEntity
 
-@Database (
+@Database(
     entities = [
-  TaskEntity::class
+        TaskEntity::class,
+        SessionEntity::class
     ],
-    version=1,
+    version = 1,
 
-)
-    abstract class AppDataBase:RoomDatabase(){
+    )
+abstract class AppDataBase : RoomDatabase() {
 
-        abstract val taskDao:TaskDao
+    abstract val taskDao: TaskDao
+    abstract val sessionDao:SessionDao
 }

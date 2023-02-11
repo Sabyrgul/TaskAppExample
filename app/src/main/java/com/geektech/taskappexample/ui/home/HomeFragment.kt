@@ -9,9 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.geektech.taskappexample.MainApplication
 import com.geektech.taskappexample.R
+import com.geektech.taskappexample.data.TaskEntity
 import com.geektech.taskappexample.databinding.FragmentHomeBinding
 import com.geektech.taskappexample.ui.home.new_task.TaskAdapter
-import com.geektech.taskappexample.ui.home.new_task.TaskEntity
 import com.geektech.taskappexample.ui.home.new_task.TaskModel
 import kotlinx.coroutines.launch
 

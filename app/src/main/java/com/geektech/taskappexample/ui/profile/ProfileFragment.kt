@@ -7,9 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.geektech.taskappexample.MainApplication
+import com.geektech.taskappexample.R
 import com.geektech.taskappexample.databinding.FragmentProfileBinding
 import com.geektech.taskappexample.utils.Preferences
+import com.google.firebase.auth.ktx.*
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
 
@@ -45,6 +52,17 @@ class ProfileFragment : Fragment() {
     private fun initListeners() {
         binding?.profileImage?.setOnClickListener {
             profilePicker.launch("image/*")
+        }
+        binding?.btnSignOut?.setOnClickListener {
+
+            Firebase.auth.signOut()
+           lifecycleScope.launch {
+               MainApplication.appDataBase?.sessionDao?.deleteSession()
+           }
+            findNavController().navigate(R.id.authFragment)
+            Preferences(requireContext()).apply {
+                setHaveSeenOnBoarding(false)
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.geektech.taskappexample.MainApplication
+import com.geektech.taskappexample.data.TaskEntity
 import com.geektech.taskappexample.databinding.FragmentNewTaskBinding
 import java.util.*
 

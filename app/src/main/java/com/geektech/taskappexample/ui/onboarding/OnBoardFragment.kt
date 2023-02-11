@@ -72,7 +72,7 @@ class OnBoardFragment : Fragment(), OnBoardPageFragment.OnBoardListeners {
         findNavController().navigate(R.id.navigation_home)
 
         Preferences(requireContext()).apply {
-            setHaveSeenOnBoarding()
+            setHaveSeenOnBoarding(true)
         }
     }
 

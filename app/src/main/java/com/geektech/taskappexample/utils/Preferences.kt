@@ -34,8 +34,8 @@ class Preferences(private val context: Context) {
     fun getNameInserted() = prefs.getString(NAME_INSERTED_KEY, "")
 
 
-    fun setHaveSeenOnBoarding() {
-        prefs.edit().putBoolean(HAVE_SEEN_ONBOARDING_KEY, true).apply()
+    fun setHaveSeenOnBoarding(boolean: Boolean) {
+        prefs.edit().putBoolean(HAVE_SEEN_ONBOARDING_KEY, boolean).apply()
     }
 
     fun getHaveSeenBoarding() = prefs.getBoolean(HAVE_SEEN_ONBOARDING_KEY, false)
