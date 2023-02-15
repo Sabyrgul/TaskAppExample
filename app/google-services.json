@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "13045204470-vgqhpq9lcauvn5d6lv5i5p0fs4cvos21.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.geektech.taskappexample",
+            "certificate_hash": "6aa0fb5f02afac29375e34f403f790caa0a3ec86"
+          }
+        },
+        {
           "client_id": "13045204470-fud8uor95dgmdfvji1sr88c7h41793fi.apps.googleusercontent.com",
           "client_type": 3
         }

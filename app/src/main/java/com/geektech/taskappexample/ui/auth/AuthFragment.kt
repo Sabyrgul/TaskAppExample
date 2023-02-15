@@ -65,7 +65,6 @@ class AuthFragment : Fragment() {
 
                 sendCode()
 
-
             }
 
         }
@@ -142,7 +141,6 @@ class AuthFragment : Fragment() {
                         storedVerificationId = verificationId
                         resendToken = token
 
-
                         Toast.makeText(
                             requireContext(),
                             "Verification code has been sent to phone ",
@@ -163,18 +161,15 @@ class AuthFragment : Fragment() {
 
         binding?.determinateBar?.visibility=View.VISIBLE
 
-       var progress=0
-
-        for(progress in 0..100 step 1){
-            binding?.determinateBar?.incrementProgressBy(progress)
-        }
-
         val credential = PhoneAuthProvider.getCredential(
             storedVerificationId!!, binding?.etVerificationCode?.text.toString()
         )
         Firebase.auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) signIn()
+                if (task.isSuccessful) {
+                    Log.d("success","success")
+                    signIn()
+                }
                 else Toast.makeText(requireContext(), task.exception.toString(), Toast.LENGTH_LONG)
                     .show()
                 binding?.determinateBar?.visibility=View.GONE
@@ -183,13 +178,14 @@ class AuthFragment : Fragment() {
     }
 
     private fun signIn() {
-        if(phoneNumber.isBlank()) throw java.lang.RuntimeException("Please, enter your phone number.")
+        if(phoneNumber.isBlank()) throw RuntimeException("Please, enter your phone number.")
 
-        val entity = SessionEntity(phoneNumber)
 
-        lifecycleScope.launch {
-            MainApplication.appDataBase?.sessionDao?.save(entity)
-        }
+//        val entity = SessionEntity(phoneNumber)
+//
+//        lifecycleScope.launch {
+//            MainApplication.appDataBase?.sessionDao?.save(entity)
+//        }
 
 
         if (Preferences(requireContext()).getHaveSeenBoarding()) {

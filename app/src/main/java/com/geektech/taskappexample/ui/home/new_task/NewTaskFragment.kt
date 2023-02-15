@@ -2,15 +2,17 @@ package com.geektech.taskappexample.ui.home.new_task
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.geektech.taskappexample.MainApplication
-import com.geektech.taskappexample.data.TaskEntity
 import com.geektech.taskappexample.databinding.FragmentNewTaskBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class NewTaskFragment : Fragment() {
@@ -28,7 +30,7 @@ class NewTaskFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentNewTaskBinding.inflate(LayoutInflater.from(context), container, false)
         return binding!!.root
@@ -49,16 +51,29 @@ class NewTaskFragment : Fragment() {
     private fun initListeners() {
         binding?.btnSave?.setOnClickListener {
 
-            val entity = TaskEntity(
+            val model = TaskModel(
                 title = binding?.etTitle?.text.toString(),
                 description = binding?.etDescription?.text?.toString(),
-                pictureUri = imageUri?.toString(),
+                imageUri = imageUri?.toString(),
                 date = this.date
             )
+            binding?.layoutTitle?.visibility = View.GONE
+            binding?.layoutDescription?.visibility = View.GONE
+            binding?.ivPicture?.visibility = View.GONE
+            binding?.btnSave?.visibility = View.GONE
+            binding?.progressCircularBar?.visibility = View.VISIBLE
 
-            MainApplication.appDataBase?.taskDao?.insert(entity)
+            Firebase.firestore.collection("tasks").add(
+                model
+            ).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(requireContext(), "Task created", Toast.LENGTH_LONG).show()
+                }
+                binding?.progressCircularBar?.visibility = View.GONE
 
-            findNavController().navigateUp()
+                findNavController().navigateUp()
+            }
+
         }
 
         binding?.ivPicture?.setOnClickListener {

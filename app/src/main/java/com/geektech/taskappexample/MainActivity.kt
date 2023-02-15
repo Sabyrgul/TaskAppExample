@@ -1,6 +1,7 @@
 package com.geektech.taskappexample
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -11,14 +12,21 @@ import androidx.navigation.ui.setupWithNavController
 import com.geektech.taskappexample.databinding.ActivityMainBinding
 import com.geektech.taskappexample.utils.Preferences
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            Log.d("TEST token", it.result)
+        }
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,23 +50,42 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        lifecycleScope.launch {
-            val session = MainApplication.appDataBase?.sessionDao?.getSession()
-            if (session == null) {
-                navController.navigate(R.id.authFragment)
-            } else {
-                if (Preferences(this@MainActivity).getHaveSeenBoarding()) {
-                    navController.navigate(
-                        R.id.navigation_home
-                    )
-                } else {
-                    navController.navigate(
-                        R.id.onBoardFragment
-                    )
-                }
-            }
 
+        fun checkAuth() {
+            if (Firebase.auth.currentUser == null) {
+                navController.navigate(
+                    R.id.authFragment
+                )
+            } else {
+                navController.navigate(
+                    R.id.navigation_home
+                )
+            }
         }
+       val preferences=Preferences(this)
+        if (preferences.getHaveSeenBoarding()) {
+            checkAuth()
+        } else {
+            checkAuth()
+        }
+
+//        lifecycleScope.launch {
+//            val session = MainApplication.appDataBase?.sessionDao?.getSession()
+//            if (session == null) {
+//                navController.navigate(R.id.authFragment)
+//            } else {
+//                if (Preferences(this@MainActivity).getHaveSeenBoarding()) {
+//                    navController.navigate(
+//                        R.id.navigation_home
+//                    )
+//                } else {
+//                    navController.navigate(
+//                        R.id.onBoardFragment
+//                    )
+//                }
+//            }
+//
+//        }
 
         navController.addOnDestinationChangedListener { _, dest, _ ->
             navView.visibility =

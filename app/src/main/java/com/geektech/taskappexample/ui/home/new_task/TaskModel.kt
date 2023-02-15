@@ -1,12 +1,14 @@
 package com.geektech.taskappexample.ui.home.new_task
 
+import com.google.firebase.firestore.DocumentId
+
 
 data class TaskModel(
-    val id: Int,
-    val title: String,
-    val description: String?,
+    @DocumentId
+    val id: String="",
+    val title: String="",
+    val description: String?=null,
     val imageUri: String? = null,
-    val date: String?
-
+    val date: String?=null
 )
 

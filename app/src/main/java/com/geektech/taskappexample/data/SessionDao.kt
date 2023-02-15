@@ -12,7 +12,7 @@ interface SessionDao {
 
     @Query("SELECT * FROM session")
     suspend fun getSession():SessionEntity?
-
-    @Query("DELETE FROM session")
-    suspend fun deleteSession()
+//
+//    @Query("DELETE FROM session")
+//    suspend fun deleteSession()
 }

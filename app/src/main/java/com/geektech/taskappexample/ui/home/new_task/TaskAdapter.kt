@@ -10,7 +10,7 @@ import com.geektech.taskappexample.databinding.ItemTaskBinding
 class TaskAdapter(private var tasks: MutableList<TaskModel> = ArrayList()) :
     RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
-    var onDelete: ((Int) -> Unit)? = null
+    var onDelete: ((String) -> Unit)? = null
 
 
     fun renew(newList: List<TaskModel>) {
@@ -42,15 +42,16 @@ class TaskAdapter(private var tasks: MutableList<TaskModel> = ArrayList()) :
             binding.tvDesc.text = task.description
             binding.tvDate.text = task.date
 
-            binding.root.setOnLongClickListener {
-                onDelete?.invoke(task.id)
-                true
-            }
+//            binding.root.setOnLongClickListener {
+//                onDelete?.invoke(task.id)
+//                true
+//            }
 
             if (task.imageUri != null) {
                 binding.ivPicture.setImageURI(Uri.parse(task.imageUri))
                 binding.ivPicture.visibility = View.VISIBLE
             }
+            else binding.ivPicture.visibility=View.GONE
         }
     }
 
